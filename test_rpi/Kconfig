@@ -1,0 +1,6 @@
+
+config TEST_RPI_LOG_LEVEL
+	int "Default log level for test_rpi"
+	default 4
+
+source "Kconfig.zephyr"

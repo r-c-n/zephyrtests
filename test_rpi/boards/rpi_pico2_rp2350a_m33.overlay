@@ -1,0 +1,46 @@
+/*
+ * Copyright (c) 2025 Igalia S.L.
+ * Author: Ricardo Cañuelo Navarro <rcn@igalia.com>
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+	chosen {
+		zephyr,shell-uart = &uart1;
+		zephyr,console = &cdc_acm_uart0;
+	};
+
+	aliases {
+		i2ctarget = &i2c0;
+	};
+
+	zephyr,user {
+		button-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	};
+};
+
+&pinctrl {
+	uart1_default: uart1_default {
+		group1 {
+			pinmux = <UART1_TX_P8>;
+		};
+		group2 {
+			pinmux = <UART1_RX_P9>;
+			input-enable;
+		};
+	};
+};
+
+&uart1 {
+	current-speed = <115200>;
+	status = "okay";
+	pinctrl-0 = <&uart1_default>;
+	pinctrl-names = "default";
+};
+
+&zephyr_udc0 {
+	cdc_acm_uart0: cdc_acm_uart0 {
+		compatible = "zephyr,cdc-acm-uart";
+	};
+};
